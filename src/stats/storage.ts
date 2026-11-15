@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import { pruneStore } from './daily';
 import { findForbiddenContent, migrateStore } from './migrations';
 import type { Store } from './model';

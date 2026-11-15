@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 // Tipos compartidos por el núcleo (sin dependencias de DOM ni de Electron).
 
 export interface Landmark {

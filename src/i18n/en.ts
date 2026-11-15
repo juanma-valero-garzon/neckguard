@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 // English catalog. Must define exactly the same keys as `es` (enforced by the type and by i18n tests).
 import type { MessageKey } from './es';
 
@@ -555,7 +558,7 @@ export const en: Record<MessageKey, string> = {
   'confidence.heuristic': 'Heuristic',
   'about.license': 'License',
   'about.license.body':
-    'NeckGuard is free software under the GNU Affero General Public License v3.0 (AGPL-3.0-only). You may use, study, modify and redistribute it under its terms; if you offer a modified version as a network service, you must offer its source code to its users.',
+    '© 2026 NeckGuard contributors. NeckGuard is free software under the GNU Affero General Public License v3.0 (AGPL-3.0-only). You may use, study, modify and redistribute it under its terms; if you offer a modified version as a network service, you must offer its source code to its users.',
   'about.license.full': 'Full license text (AGPL-3.0)',
   'about.license.third': 'Third-party component licenses',
   'about.license.error': 'The license text could not be loaded.',

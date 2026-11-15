@@ -1,9 +1,12 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import { AlertAudio, browserAudioFactory } from '../alerts/audio';
 import { inQuietHours, type AlertAction } from '../alerts/policy';
 import type { BreakEvent, BreakKind } from '../breaks/timers';
 import { CameraManager, type CameraState } from '../camera/camera';
 import { PostureEngine, type EngineSnapshot } from '../engine/engine';
-import { formatMmSs, makeT } from '../i18n';
+import { detectLocale, formatMmSs, makeT } from '../i18n';
 import { selectProfile, type CalibrationProfile } from '../posture/calibration';
 import { detectPlatform } from '../platform';
 import type { Platform, SystemEvent, TrayCommand } from '../platform/platform';
@@ -87,6 +90,7 @@ export class AppRuntime {
     this.started = true;
     this.platform = detectPlatform();
     const loaded = await loadStore(this.platform.storage);
+    if (loaded.status === 'fresh') loaded.store.settings.locale = detectLocale();
     set({
       ready: true,
       store: loaded.store,
@@ -763,6 +767,7 @@ export class AppRuntime {
     this.persistTimer = null;
     await eraseAll(this.platform.storage);
     const fresh = defaultStore();
+    fresh.settings.locale = detectLocale();
     this.engine.setProfile(null);
     this.engine.configure(fresh.settings);
     set({

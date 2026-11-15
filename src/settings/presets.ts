@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import type { AlertSettings } from '../alerts/policy';
 import { DEFAULT_ALERT_SETTINGS } from '../alerts/policy';
 import type { BreakConfig } from '../breaks/timers';

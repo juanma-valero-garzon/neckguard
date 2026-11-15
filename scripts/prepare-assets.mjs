@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 // Prepara los activos empaquetados (WASM + modelos). Solo se ejecuta en instalación/compilación;
 // en ejecución la app no hace ninguna petición de red.
 import { createHash } from 'node:crypto';

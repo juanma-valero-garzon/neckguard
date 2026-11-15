@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import type { CaptureMode, DeviationId, Side } from '../core/types';
 import { DEVIATION_IDS } from '../core/types';
 import type { ClinicalConfig } from '../settings/clinical-config';

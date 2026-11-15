@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 export type BreakKind = 'micro' | 'long';
 /** Estado de presencia relevante para los descansos. 'locked' incluye suspensión y bloqueo de pantalla. */
 export type BreakPresence = 'present' | 'absent' | 'nodata' | 'locked' | 'standing';

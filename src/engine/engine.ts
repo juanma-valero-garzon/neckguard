@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import type { AlertAction, AlertState } from '../alerts/policy';
 import { initialAlertState, snooze as snoozeAlertState, stepAlerts } from '../alerts/policy';
 import type { BlinkAlertState } from '../alerts/blinkPolicy';

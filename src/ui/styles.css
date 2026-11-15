@@ -193,7 +193,13 @@ html.electron .topbar {
   -webkit-app-region: no-drag;
 }
 .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-weight: 700;
+}
+.brand-logo {
+  border-radius: 6px;
 }
 .topbar nav {
   display: flex;
@@ -702,6 +708,19 @@ fieldset {
 .onboarding {
   max-width: 640px;
   margin: 0 auto;
+}
+.onboarding-head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.onboarding-head h1 {
+  margin: 0;
+}
+.onboarding-logo {
+  flex: none;
+  border-radius: 12px;
 }
 .countdown {
   font-size: 34px;

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import type { CaptureMode, DeviationId, PostureLevel, PresenceStatus } from '../core/types';
 import { CLINICAL_CONFIG } from '../settings/clinical-config';
 import type { ActivityState, AwayEpisode, AwayKind, HourBucket, SessionSummary, SittingBlock } from './model';

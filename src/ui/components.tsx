@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import type { ReactNode } from 'react';
 import type { PostureLevel } from '../core/types';
 import { formatMeterValue, meterBar, meterZone, type MeterZone } from '../app/clock';

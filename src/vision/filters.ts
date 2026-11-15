@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import type { Landmark } from '../core/types';
 import { DEFAULT_MIN_VISIBILITY, isUsable } from './landmarks';
 

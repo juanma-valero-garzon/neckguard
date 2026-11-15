@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import type { ReactNode } from 'react';
 import { alertMessageKey, deviationLabelKey, KEY_METERS } from '../app/clock';
 import { runtime } from '../app/runtime';

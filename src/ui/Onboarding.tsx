@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import { useState, type ReactNode } from 'react';
 import { runtime } from '../app/runtime';
 import { useApp } from '../app/store';
@@ -5,6 +8,12 @@ import { Notice } from './components';
 import { useT } from './useT';
 
 const STEPS = 4;
+const STEP_TITLES = [
+  'onboarding.welcome.title',
+  'onboarding.redflags.title',
+  'onboarding.camera.title',
+  'onboarding.alerts.title',
+] as const;
 const RED_FLAGS = [
   'arm',
   'tingling',
@@ -31,11 +40,22 @@ export function Onboarding(): ReactNode {
 
   return (
     <main className="onboarding" aria-labelledby="ob-title">
-      <p className="step-count">{t('onboarding.step', { current: step + 1, total: STEPS })}</p>
+      <header className="onboarding-head">
+        <img
+          className="onboarding-logo"
+          src={`${import.meta.env.BASE_URL}icon.svg`}
+          alt=""
+          width={56}
+          height={56}
+        />
+        <div>
+          <p className="step-count">{t('onboarding.step', { current: step + 1, total: STEPS })}</p>
+          <h1 id="ob-title">{t(STEP_TITLES[step])}</h1>
+        </div>
+      </header>
 
       {step === 0 && (
         <>
-          <h1 id="ob-title">{t('onboarding.welcome.title')}</h1>
           <p>{t('onboarding.welcome.body')}</p>
           <Notice kind="warning">{t('legal.notMedical')}</Notice>
           <ul className="bullets">
@@ -57,7 +77,6 @@ export function Onboarding(): ReactNode {
 
       {step === 1 && (
         <>
-          <h1 id="ob-title">{t('onboarding.redflags.title')}</h1>
           <p>{t('onboarding.redflags.intro')}</p>
           <ul className="bullets">
             {RED_FLAGS.map((f) => (
@@ -85,7 +104,6 @@ export function Onboarding(): ReactNode {
 
       {step === 2 && (
         <>
-          <h1 id="ob-title">{t('onboarding.camera.title')}</h1>
           <p>{t('onboarding.camera.body')}</p>
           <fieldset className="mode-choice">
             <legend>{t('settings.mode')}</legend>
@@ -130,7 +148,6 @@ export function Onboarding(): ReactNode {
 
       {step === 3 && (
         <>
-          <h1 id="ob-title">{t('onboarding.alerts.title')}</h1>
           <p>{t('onboarding.alerts.body')}</p>
           <div className="actions left">
             <button

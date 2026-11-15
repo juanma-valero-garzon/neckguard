@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 export type ToneSetId = 'soft' | 'chime' | 'wood';
 export type ToneKind = 'MALA_POSTURA' | 'CRITICA' | 'BREAK' | 'POSITIVE';
 

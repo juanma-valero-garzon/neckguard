@@ -11,6 +11,7 @@ export default defineConfig({
       name: 'chromium-fake-camera',
       use: {
         ...devices['Desktop Chrome'],
+        locale: 'es-ES',
         launchOptions: {
           args: [
             '--use-fake-device-for-media-stream',

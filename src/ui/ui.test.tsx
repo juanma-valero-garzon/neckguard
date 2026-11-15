@@ -1,7 +1,10 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 // @vitest-environment jsdom
 import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
-import { afterEach, beforeAll, describe, expect, it } from 'vitest';
+import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { runtime } from '../app/runtime';
 import { useApp } from '../app/store';
 import { defaultStore, emptyTotals } from '../stats/model';
@@ -34,6 +37,7 @@ const button = (c: HTMLElement, text: RegExp): HTMLButtonElement =>
   [...c.querySelectorAll('button')].find((b) => text.test(b.textContent ?? '')) as HTMLButtonElement;
 
 beforeAll(async () => {
+  vi.spyOn(navigator, 'languages', 'get').mockReturnValue(['es-ES']);
   localStorage.clear();
   await runtime.init();
 });

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { runtime } from '../app/runtime';
 import { BREAK_DURATION_MS, useApp } from '../app/store';

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import type { Locale } from '../settings/schema';
 import { en } from './en';
 import { es, type MessageKey } from './es';
@@ -9,6 +12,12 @@ const catalogs: Record<Locale, Record<string, string>> = { es, en };
 export const LOCALES: readonly Locale[] = ['es', 'en'];
 
 export type Params = Record<string, string | number>;
+
+/** Idioma inicial según el del sistema: español si empieza por «es»; inglés en cualquier otro caso. */
+export function detectLocale(languages: readonly string[] | undefined = globalThis.navigator?.languages): Locale {
+  const first = languages?.[0]?.toLowerCase() ?? '';
+  return first === 'es' || first.startsWith('es-') ? 'es' : 'en';
+}
 
 function interpolate(template: string, params?: Params): string {
   if (!params) return template;

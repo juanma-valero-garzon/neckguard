@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import { useEffect, useState, type ReactNode } from 'react';
 import { makeT } from '../i18n';
 import type { TraySnapshot, TrayCommand } from '../platform/platform';

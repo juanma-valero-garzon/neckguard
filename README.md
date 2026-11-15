@@ -67,4 +67,4 @@ Ver [CHANGELOG.md](CHANGELOG.md) y [docs/QA.md](docs/QA.md) (qué está verifica
 
 ## Licencia
 
-NeckGuard se distribuye bajo la **GNU Affero General Public License v3.0** (`AGPL-3.0-only`, ver [LICENSE](LICENSE)). Las licencias de los componentes de terceros y el análisis de compatibilidad están en [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) (se regenera con `npm run licenses`). Pendiente antes de redistribuir: confirmar la licencia de los ficheros de modelo de MediaPipe.
+Copyright © 2026 NeckGuard contributors. NeckGuard se distribuye bajo la **GNU Affero General Public License v3.0** (`AGPL-3.0-only`, ver [LICENSE](LICENSE)). Las licencias de los componentes de terceros y el análisis de compatibilidad están en [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) (se regenera con `npm run licenses`). Pendiente antes de redistribuir: confirmar la licencia de los ficheros de modelo de MediaPipe.

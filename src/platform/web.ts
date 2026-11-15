@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import type { KeyValueStorage } from '../stats/storage';
 import type { NotificationAccess, Platform } from './platform';
 import { DEFAULT_CAPABILITIES } from './platform';

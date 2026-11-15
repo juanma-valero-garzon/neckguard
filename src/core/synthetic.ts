@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 // Generador de poses sintéticas con geometría conocida (tests, fixtures y simulación). Sin imágenes.
 import type { Landmark, Side } from './types';
 import { LM, POSE_LANDMARK_COUNT } from '../vision/landmarks';

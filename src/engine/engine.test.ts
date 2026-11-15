@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import { describe, expect, it } from 'vitest';
 import { ASPECT, frontalPose, lateralPose, type FrontalParams } from '../core/synthetic';
 import { FakeClock, gaussian, mulberry32 } from '../core/testing';

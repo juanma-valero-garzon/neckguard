@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import type { Landmark, PresenceStatus } from '../core/types';
 import type { Baseline } from '../posture/deviations';
 import type { RawMetrics } from '../posture/metrics';

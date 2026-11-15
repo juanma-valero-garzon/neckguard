@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 // Temporizador en Worker: los timers del hilo principal se ralentizan con la ventana en segundo plano.
 interface StartMsg {
   type: 'start';

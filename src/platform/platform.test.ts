@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import { describe, expect, it, vi } from 'vitest';
 import type { NeckGuardBridge, Platform, SystemEvent, TrayCommand, TraySnapshot } from './platform';
 import { createElectronPlatform } from './electron';

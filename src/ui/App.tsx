@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import { useEffect, type ReactNode } from 'react';
 import { runtime } from '../app/runtime';
 import { useApp, type Screen } from '../app/store';
@@ -68,7 +71,16 @@ export function App(): ReactNode {
       </a>
       {!inFlow && (
         <header className="topbar">
-          <span className="brand">{t('app.name')}</span>
+          <span className="brand">
+            <img
+              className="brand-logo"
+              src={`${import.meta.env.BASE_URL}icon.svg`}
+              alt=""
+              width={24}
+              height={24}
+            />
+            {t('app.name')}
+          </span>
           <nav aria-label={t('nav.label')}>
             {NAV.map((n) => (
               <button

@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 export const DAY_MS = 86_400_000;
 
 /** Clave de día local (YYYY-MM-DD) para un desfase UTC dado en minutos (p. ej. +60 en CET). */

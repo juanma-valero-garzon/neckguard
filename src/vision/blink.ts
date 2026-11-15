@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 export interface BlinkConfig {
   /** Puntuación (0-1) a partir de la cual el ojo se considera cerrado. */
   closeAbove: number;

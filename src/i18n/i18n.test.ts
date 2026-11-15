@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
@@ -5,7 +8,7 @@ import { DEVIATION_IDS, LEVELS } from '../core/types';
 import { EXERCISES, exerciseKeys } from '../exercises/library';
 import { en } from './en';
 import { es } from './es';
-import { LOCALES, formatDate, formatDuration, formatMmSs, formatTime, makeT, translate } from './index';
+import { LOCALES, detectLocale, formatDate, formatDuration, formatMmSs, formatTime, makeT, translate } from './index';
 
 const keys = (o: object): string[] => Object.keys(o).sort();
 
@@ -167,5 +170,13 @@ describe('i18n: traducción, plurales y formatos', () => {
 
   it('LOCALES enumera es y en', () => {
     expect(LOCALES).toEqual(['es', 'en']);
+  });
+
+  it('detectLocale: español solo si el idioma preferido es es*; inglés en el resto', () => {
+    expect(detectLocale(['es-ES', 'en'])).toBe('es');
+    expect(detectLocale(['es'])).toBe('es');
+    expect(detectLocale(['en-US', 'es'])).toBe('en');
+    expect(detectLocale(['fr-FR'])).toBe('en');
+    expect(detectLocale([])).toBe('en');
   });
 });

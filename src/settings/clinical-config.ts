@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 // Fuente única de umbrales clínicos. TODOS son valores de partida NO validados clínicamente.
 // Deben ser revisados por un/a fisioterapeuta humano/a antes de cualquier uso real (ver docs/CLINICAL.md).
 import type { CaptureMode, Confidence, DeviationId } from '../core/types';

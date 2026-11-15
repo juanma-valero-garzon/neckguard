@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import { create } from 'zustand';
 import type { CalibrationFailure, CalibrationProfile } from '../posture/calibration';
 import type { CameraState } from '../camera/camera';

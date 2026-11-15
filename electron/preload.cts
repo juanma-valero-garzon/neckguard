@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 // Preload con sandbox: solo puede usar `electron`. Expone una API mínima y validada por el proceso principal.
 // Los canales están duplicados en main.cts (el preload no puede importar módulos locales).
 import { contextBridge, ipcRenderer } from 'electron';

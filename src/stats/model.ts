@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import type { BreakKind } from '../breaks/timers';
 import type { CaptureMode, DeviationId } from '../core/types';
 import type { CalibrationProfile } from '../posture/calibration';

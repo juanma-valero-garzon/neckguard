@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import type { NeckGuardBridge, Platform } from './platform';
 
 /** Adaptador de la API expuesta por el preload (`window.neckguard`) al contrato `Platform`. */

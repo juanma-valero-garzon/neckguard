@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 // Validación de todo lo que cruza el IPC (sin dependencias de Electron: probable con Vitest).
 
 export const APP_HOST = 'neckguard';

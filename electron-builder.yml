@@ -1,6 +1,6 @@
 appId: app.neckguard.desktop
 productName: NeckGuard
-copyright: NeckGuard
+copyright: Copyright © 2026 NeckGuard contributors
 asar: true
 directories:
   output: release

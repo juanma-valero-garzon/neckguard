@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 // Genera THIRD_PARTY_NOTICES.md (avisos de licencias de lo que se distribuye), que "Acerca de" incrusta en el build.
 // Se ejecuta tras `npm install` y antes de `npm run build`.
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';

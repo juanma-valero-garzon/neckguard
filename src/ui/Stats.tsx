@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import { useMemo, useState, type ReactNode } from 'react';
 import { deviationLabelKey } from '../app/clock';
 import { useApp } from '../app/store';

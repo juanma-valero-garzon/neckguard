@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: AGPL-3.0-only
+// Copyright (C) 2026 NeckGuard contributors
+
 import type { DeviationId } from '../core/types';
 import { suggestExercise, type ExerciseGate } from '../exercises/library';
 import { CLINICAL_CONFIG } from '../settings/clinical-config';
