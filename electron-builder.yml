@@ -1,0 +1,46 @@
+appId: app.neckguard.desktop
+productName: NeckGuard
+copyright: NeckGuard
+asar: true
+directories:
+  output: release
+  buildResources: build
+files:
+  - dist/**
+  - dist-electron/**
+  - assets/tray/**
+  - package.json
+electronLanguages: [es, en]
+mac:
+  category: public.app-category.healthcare-fitness
+  icon: build/icon.png
+  target:
+    - target: dmg
+      arch: [universal]
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  minimumSystemVersion: '12.0'
+  # Build de desarrollo sin firmar. Para firmar y notarizar, ver docs/PACKAGING.md.
+  identity: null
+  extendInfo:
+    NSCameraUsageDescription: NeckGuard usa la cámara para analizar tu postura. Las imágenes se procesan solo en tu equipo y nunca se guardan ni se envían.
+dmg:
+  title: NeckGuard
+win:
+  icon: build/icon.png
+  target:
+    - target: nsis
+      arch: [x64, arm64]
+    - target: portable
+      arch: [x64]
+  # Build sin firmar (SmartScreen avisará). Para firmar, ver docs/PACKAGING.md.
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  deleteAppDataOnUninstall: false
+  artifactName: ${productName}-Setup-${version}-${arch}.${ext}
+portable:
+  artifactName: ${productName}-Portable-${version}-${arch}.${ext}

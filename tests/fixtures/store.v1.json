@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "settings": { "locale": "en", "fps": 15, "alerts": { "volume": 0.3 } },
+  "profiles": [],
+  "sessions": [
+    {
+      "id": "a",
+      "startedAt": 1767600000000,
+      "endedAt": 1767603600000,
+      "mode": "lateral",
+      "goodSec": 3000,
+      "badSec": 400,
+      "sittingSec": 3600,
+      "absentSec": 200
+    },
+    { "startedAt": 1767690000000, "endedAt": 1767693600000, "goodSec": 100, "badSec": 50, "absentSec": 0 }
+  ],
+  "alerts": [
+    { "t": 1767601000000, "severity": "critical", "reason": "protrusion" },
+    { "t": 1767602000000, "severity": "bad", "reason": "unknown" }
+  ],
+  "breaks": [
+    { "t": 1767601500000, "done": true },
+    { "t": 1767602500000, "done": false }
+  ]
+}

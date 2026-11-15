@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-electron
+release
+coverage
+public/models
+public/wasm
+playwright-report
+test-results
+.DS_Store

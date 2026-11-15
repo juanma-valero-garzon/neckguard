@@ -1,0 +1,13 @@
+dist
+dist-electron
+release
+coverage
+public
+node_modules
+package-lock.json
+prompt_app_postura_cervical.md
+playwright-report
+test-results
+assets/models.lock.json
+THIRD_PARTY_NOTICES.md
+LICENSE
