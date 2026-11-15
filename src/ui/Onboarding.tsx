@@ -50,7 +50,7 @@ export function Onboarding(): ReactNode {
         />
         <div>
           <p className="step-count">{t('onboarding.step', { current: step + 1, total: STEPS })}</p>
-          <h1 id="ob-title">{t(STEP_TITLES[step])}</h1>
+          <h1 id="ob-title">{t(STEP_TITLES[step] ?? STEP_TITLES[0])}</h1>
         </div>
       </header>
 
