@@ -2,6 +2,7 @@
 // Copyright (C) 2026 NeckGuard contributors
 
 import type { ReactNode } from 'react';
+import { homepage } from '../../package.json';
 import { deviationLabelKey } from '../app/clock';
 import { useApp } from '../app/store';
 import { DEVIATION_IDS } from '../core/types';
@@ -108,6 +109,11 @@ export function About(): ReactNode {
         <p>{t('about.license.body')}</p>
         <LicenseViewer kind="license" title={t('about.license.full')} />
         <LicenseViewer kind="notices" title={t('about.license.third')} />
+        <p>
+          <a href={homepage} target="_blank" rel="noopener noreferrer">
+            {t('about.source')}
+          </a>
+        </p>
       </Card>
       <Card title={t('about.limits')}>
         <ul className="bullets">

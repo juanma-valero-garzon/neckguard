@@ -48,6 +48,7 @@ protocol.registerSchemesAsPrivileged([
 const DIST = path.join(app.getAppPath(), 'dist');
 const ASSETS = path.join(app.getAppPath(), 'assets');
 const PRELOAD = path.join(__dirname, 'preload.cjs');
+const REPO_URL = 'https://github.com/juanma-valero-garzon/neckguard';
 
 let mainWindow: BrowserWindow | null = null;
 let popover: BrowserWindow | null = null;
@@ -72,7 +73,11 @@ const webPreferences = {
 } as const;
 
 function lockDown(win: BrowserWindow): void {
-  win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+  win.webContents.setWindowOpenHandler(({ url }) => {
+    // Único enlace externo permitido: el repositorio, en el navegador del sistema.
+    if (url === REPO_URL) void shell.openExternal(url);
+    return { action: 'deny' };
+  });
   win.webContents.on('will-navigate', (e, url) => {
     if (!isTrustedUrl(url)) e.preventDefault();
   });

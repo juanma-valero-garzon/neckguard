@@ -569,6 +569,7 @@ export const es = {
     '© 2026 NeckGuard contributors. NeckGuard es software libre bajo la licencia GNU Affero General Public License v3.0 (AGPL-3.0-only). Puedes usarlo, estudiarlo, modificarlo y redistribuirlo según sus términos; si ofreces una versión modificada como servicio en red, debes ofrecer su código fuente a las personas usuarias.',
   'about.license.full': 'Texto completo de la licencia (AGPL-3.0)',
   'about.license.third': 'Licencias de componentes de terceros',
+  'about.source': 'Código fuente y seguimiento de incidencias',
   'about.license.error': 'No se pudo cargar el texto de la licencia.',
   'about.limits': 'Límites técnicos',
   'about.limit.cva':

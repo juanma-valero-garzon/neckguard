@@ -7,6 +7,14 @@
   "main": "dist-electron/main.cjs",
   "author": "NeckGuard",
   "license": "AGPL-3.0-only",
+  "homepage": "https://github.com/juanma-valero-garzon/neckguard",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juanma-valero-garzon/neckguard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/juanma-valero-garzon/neckguard/issues"
+  },
   "engines": {
     "node": ">=20"
   },

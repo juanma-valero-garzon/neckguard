@@ -561,6 +561,7 @@ export const en: Record<MessageKey, string> = {
     '© 2026 NeckGuard contributors. NeckGuard is free software under the GNU Affero General Public License v3.0 (AGPL-3.0-only). You may use, study, modify and redistribute it under its terms; if you offer a modified version as a network service, you must offer its source code to its users.',
   'about.license.full': 'Full license text (AGPL-3.0)',
   'about.license.third': 'Third-party component licenses',
+  'about.source': 'Source code and issue tracker',
   'about.license.error': 'The license text could not be loaded.',
   'about.limits': 'Technical limits',
   'about.limit.cva':
