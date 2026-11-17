@@ -664,7 +664,7 @@ export class PostureEngine {
       breaks: {
         nextKind: nb.kind,
         remainingMs: nb.remainingMs,
-        sittingMs: this.breakState.long,
+        sittingMs: Math.min(this.breakState.micro, this.breakState.long),
         pending: pendingBreak(this.breakState),
       },
       calibration: { active: this.calibration !== null, count: this.calibration?.count ?? 0 },

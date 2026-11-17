@@ -207,6 +207,33 @@ describe('engine: descansos y presencia', () => {
     expect(t.records.map((r) => r.outcome)).toEqual(['declared', 'completed']);
   });
 
+  it('sittingMs usa el contador del descanso más próximo (mínimo de micro y long)', () => {
+    const t = setup();
+    t.calibrate();
+    // Justo después de 30 min: micro vence
+    let snap = t.feed(30 * 60, {}, { fps: 1 });
+    expect(snap.breaks.nextKind).toBe('micro');
+    // Ambos acumuladores están en ~30min
+    const sittingAt30min = snap.breaks.sittingMs;
+    expect(sittingAt30min).toBeGreaterThanOrEqual(29 * 60 * 1000);
+    expect(sittingAt30min).toBeLessThanOrEqual(31 * 60 * 1000);
+    
+    // Después de hacer un micro: sittingMs debe bajar significativamente
+    t.engine.finishBreak('micro', 'done');
+    snap = t.feed(1 * 60, {}, { fps: 1 });
+    // Ahora:
+    // - micro fue reiniciado, así que = ~1min
+    // - long continúa, así que = ~31min
+    // - nextKind será 'micro' porque falta menos para el micro (29 min) que para largo (24 min)
+    // Espera, 55 - 31 = 24 min para largo. 30 - 1 = 29 min para micro. Así que long será primero.
+    // Lo importante es que el mínimo sea ~1min, no ~31min
+    const sittingAfterMicro = snap.breaks.sittingMs;
+    expect(sittingAfterMicro).toBeLessThan(2 * 60 * 1000);
+    expect(sittingAfterMicro).toBeGreaterThan(0);
+    // Este valor debe ser mucho menor que el de antes (demostración del fix)
+    expect(sittingAfterMicro).toBeLessThan(sittingAt30min / 10);
+  });
+
   it('sin fotogramas (cámara tapada o desconectada) ⇒ "sin datos": el contador se pausa', () => {
     const t = setup();
     t.calibrate();
