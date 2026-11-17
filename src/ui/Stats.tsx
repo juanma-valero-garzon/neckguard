@@ -63,6 +63,65 @@ function Reliability({ p }: { p: PeriodSummary }): ReactNode {
   );
 }
 
+function DayDetail({
+  day,
+  locale,
+  onClose,
+}: {
+  day: PeriodSummary;
+  locale: 'es' | 'en';
+  onClose: () => void;
+}): ReactNode {
+  const t = useT();
+  const dateStr = formatDate(locale, noon(day.key), { dateStyle: 'full', timeZone: 'UTC' });
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h2>{t('stats.day.title', { date: dateStr })}</h2>
+          <button className="btn-close" onClick={onClose} aria-label={t('stats.day.close')}>
+            {'\u2717'}
+          </button>
+        </div>
+        <div className="modal-body">
+          <div className="grid-2">
+            <Card title={t('stats.good')}>
+              <p className="big">{pct(day.reliability === 'insufficient' ? null : day.goodRatio)}</p>
+              <small>
+                <Reliability p={day} />
+              </small>
+            </Card>
+            <Card title={t('stats.alerts')}>
+              <p className="big">{day.alerts}</p>
+              <small>
+                {t('stats.period.day')} · {t('stats.alerts')}
+              </small>
+            </Card>
+            <Card title={t('stats.breaks')}>
+              <p className="big">{day.breaksCompleted}</p>
+              <small>
+                {t('stats.breaksDetail', { declared: day.breaksDeclared, skipped: day.breaksSkipped })}
+              </small>
+            </Card>
+            <Card title={t('stats.presence')}>
+              <ul className="bullets">
+                <li>{formatDuration(locale, day.analysedMs)}</li>
+                <li>
+                  {formatDuration(locale, day.awayMs)} {t('stats.away')}
+                </li>
+              </ul>
+            </Card>
+          </div>
+          <Card title={t('stats.heatmap')}>
+            <HourStrip p={day} locale={locale} />
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Bars({
   days,
   locale,
@@ -74,51 +133,142 @@ function Bars({
   label: string;
   compact: boolean;
 }): ReactNode {
+  const [selectedDay, setSelectedDay] = useState<PeriodSummary | null>(null);
   return (
-    <div className={`bars${compact ? ' compact' : ''}`} role="img" aria-label={label}>
-      {days.map((d) => {
-        const ratio = d.reliability === 'insufficient' ? null : d.goodRatio;
-        return (
-          <div key={d.key} className="bar-col">
-            <div className="bar-track">
-              <div
-                className={`bar-fill${d.reliability === 'low' ? ' bar-low' : ''}`}
-                style={{ height: `${Math.round((ratio ?? 0) * 100)}%` }}
-              />
+    <>
+      <div className={`bars${compact ? ' compact' : ''}`} role="img" aria-label={label}>
+        {days.map((d) => {
+          const ratio = d.reliability === 'insufficient' ? null : d.goodRatio;
+          return (
+            <div
+              key={d.key}
+              className="bar-col"
+              onClick={() => setSelectedDay(d)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setSelectedDay(d);
+                }
+              }}
+            >
+              <div className="bar-track">
+                <div
+                  className={`bar-fill${d.reliability === 'low' ? ' bar-low' : ''}`}
+                  style={{ height: `${Math.round((ratio ?? 0) * 100)}%` }}
+                />
+              </div>
+              {!compact && <span className="bar-val">{pct(ratio)}</span>}
+              <span className="bar-label">
+                {compact
+                  ? Number(d.key.slice(8))
+                  : formatDate(locale, noon(d.key), { weekday: 'short', timeZone: 'UTC' })}
+              </span>
             </div>
-            {!compact && <span className="bar-val">{pct(ratio)}</span>}
-            <span className="bar-label">
-              {compact
-                ? Number(d.key.slice(8))
-                : formatDate(locale, noon(d.key), { weekday: 'short', timeZone: 'UTC' })}
-            </span>
+          );
+        })}
+      </div>
+      {selectedDay && <DayDetail day={selectedDay} locale={locale} onClose={() => setSelectedDay(null)} />}
+    </>
+  );
+}
+
+function HourDetail({
+  hour,
+  p,
+  locale,
+  onClose,
+}: {
+  hour: number;
+  p: PeriodSummary;
+  locale: 'es' | 'en';
+  onClose: () => void;
+}): ReactNode {
+  const t = useT();
+  const hourData = p.hours.find((h) => h.hour === hour);
+  if (!hourData) return null;
+
+  const seatedMs = hourData.okMs + hourData.mildMs + hourData.badMs + hourData.criticalMs;
+  const goodRatio = seatedMs > 0 ? hourData.okMs / seatedMs : 0;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
+          <h2>{t('stats.hour.title', { hour })}</h2>
+          <button className="btn-close" onClick={onClose} aria-label={t('stats.day.close')}>
+            {'\u2717'}
+          </button>
+        </div>
+        <div className="modal-body">
+          <div className="grid-2">
+            <Card title={t('stats.hour.good')}>
+              <p className="big">{Math.round(goodRatio * 100)}%</p>
+              <small>{formatDuration(locale, hourData.okMs)}</small>
+            </Card>
+            <Card title={t('stats.hour.mild')}>
+              <p className="big">{Math.round((hourData.mildMs / seatedMs) * 100)}%</p>
+              <small>{formatDuration(locale, hourData.mildMs)}</small>
+            </Card>
+            <Card title={t('stats.hour.bad')}>
+              <p className="big">{Math.round((hourData.badMs / seatedMs) * 100)}%</p>
+              <small>{formatDuration(locale, hourData.badMs)}</small>
+            </Card>
+            <Card title={t('stats.hour.critical')}>
+              <p className="big">{Math.round((hourData.criticalMs / seatedMs) * 100)}%</p>
+              <small>{formatDuration(locale, hourData.criticalMs)}</small>
+            </Card>
           </div>
-        );
-      })}
+          <Card title={t('stats.hour.away')}>
+            <p className="big">{formatDuration(locale, hourData.awayMs)}</p>
+          </Card>
+        </div>
+      </div>
     </div>
   );
 }
 
-function HourStrip({ p }: { p: PeriodSummary }): ReactNode {
+function HourStrip({ p, locale }: { p: PeriodSummary; locale: 'es' | 'en' }): ReactNode {
   const t = useT();
+  const [selectedHour, setSelectedHour] = useState<number | null>(null);
   const stats = new Map(hourlyProfile(p).map((h) => [h.hour, h]));
   if (stats.size === 0) return <p className="muted">{t('stats.heatmap.none')}</p>;
   return (
-    <ul className="hours" aria-label={t('stats.heatmap')}>
-      {Array.from({ length: 24 }, (_, hour) => {
-        const h = stats.get(hour);
-        const tone = !h ? 'none' : h.goodRatio >= 0.8 ? 'good' : h.goodRatio >= 0.5 ? 'mid' : 'bad';
-        const text = h
-          ? t('stats.heatmap.cell', { hour, value: Math.round(h.goodRatio * 100) })
-          : t('stats.heatmap.cellNone', { hour });
-        return (
-          <li key={hour} className={`hour-cell ${tone}`} title={text} aria-label={text}>
-            <span aria-hidden="true">{h ? Math.round(h.goodRatio * 100) : '·'}</span>
-            <small aria-hidden="true">{hour}</small>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      <ul className="hours" aria-label={t('stats.heatmap')}>
+        {Array.from({ length: 24 }, (_, hour) => {
+          const h = stats.get(hour);
+          const tone = !h ? 'none' : h.goodRatio >= 0.8 ? 'good' : h.goodRatio >= 0.5 ? 'mid' : 'bad';
+          const text = h
+            ? t('stats.heatmap.cell', { hour, value: Math.round(h.goodRatio * 100) })
+            : t('stats.heatmap.cellNone', { hour });
+          return (
+            <li
+              key={hour}
+              className={`hour-cell ${tone}${h ? ' cursor-pointer' : ''}`}
+              title={text}
+              aria-label={text}
+              onClick={() => h && setSelectedHour(hour)}
+              role={h ? 'button' : undefined}
+              tabIndex={h ? 0 : undefined}
+              onKeyDown={(e) => {
+                if (h && (e.key === 'Enter' || e.key === ' ')) {
+                  e.preventDefault();
+                  setSelectedHour(hour);
+                }
+              }}
+            >
+              <span aria-hidden="true">{h ? Math.round(h.goodRatio * 100) : '·'}</span>
+              <small aria-hidden="true">{hour}</small>
+            </li>
+          );
+        })}
+      </ul>
+      {selectedHour !== null && (
+        <HourDetail hour={selectedHour} p={p} locale={locale} onClose={() => setSelectedHour(null)} />
+      )}
+    </>
   );
 }
 
@@ -279,7 +429,7 @@ export function Stats(): ReactNode {
           )}
 
           <Card title={t('stats.heatmap')}>
-            <HourStrip p={c} />
+            <HourStrip p={c} locale={locale} />
           </Card>
 
           <Card title={t('stats.presence')}>
