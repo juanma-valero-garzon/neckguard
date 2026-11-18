@@ -1,8 +1,13 @@
-git credential-osxkeychain erase <<EOF
-host=github.com
-protocol=https
-EOFname: CI
-on: [push, pull_request]
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: macos-latest
@@ -19,3 +24,35 @@ jobs:
       - run: npm audit --omit=dev
       - run: npx playwright install chromium
       - run: npm run test:e2e
+
+  # Paquetes sin firmar, descargables desde Actions → run → Artifacts.
+  package:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            name: macos
+            script: electron:pack
+            files: release/*.dmg
+          - os: windows-latest
+            name: windows
+            script: electron:pack:win
+            files: release/*.exe
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run ${{ matrix.script }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: neckguard-${{ matrix.name }}-${{ github.sha }}
+          path: ${{ matrix.files }}
+          if-no-files-found: error
+          retention-days: 90

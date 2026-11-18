@@ -19,6 +19,10 @@ npm run electron:pack:win:dir  # release/win-unpacked/ (solo x64, sin instalador
 
 Se puede construir desde macOS. Sin firmar: SmartScreen mostrará un aviso. Para firmar, define `CSC_LINK` y `CSC_KEY_PASSWORD` (certificado .pfx) o configura `win.azureSignOptions` en `electron-builder.yml`.
 
+## Descargas desde CI
+
+Cada push a `main` (o ejecución manual de «CI» en Actions) que pase los tests genera los paquetes en el job `package` de `.github/workflows/ci.yml`: `.dmg` universal (macOS) y `.exe` (NSIS x64/arm64 + portable x64) como artifacts `neckguard-macos-<sha>` y `neckguard-windows-<sha>`. Se descargan desde Actions → run → Artifacts (requiere sesión en GitHub; caducan a los 90 días). Están sin firmar (Gatekeeper / SmartScreen avisarán).
+
 ## Permisos macOS
 
 - `NSCameraUsageDescription` en `Info.plist` (`electron-builder.yml → mac.extendInfo`).
