@@ -149,7 +149,11 @@ export class SessionRecorder {
             c.criticalMs += dtMs;
             hour.criticalMs += dtMs;
           }
-          if (reason) c.deviationMs[reason] = (c.deviationMs[reason] ?? 0) + dtMs;
+          if (reason) {
+            c.deviationMs[reason] = (c.deviationMs[reason] ?? 0) + dtMs;
+            const hd = (hour.deviationMs ??= {});
+            hd[reason] = (hd[reason] ?? 0) + dtMs;
+          }
         }
         for (const id of active) c.deviationActiveMs[id] = (c.deviationActiveMs[id] ?? 0) + dtMs;
         break;

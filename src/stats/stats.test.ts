@@ -409,6 +409,16 @@ describe('SessionRecorder', () => {
     expect(s.deviationActiveMs).toEqual({ protrusion: 3000, slouch: 5000 });
   });
 
+  it('registra la desviación principal también por franja horaria', () => {
+    const r = mk();
+    const h = 3_600_000;
+    r.add(1000, 1000, 'seated', 'MALA_POSTURA', 'slouch', ['slouch']);
+    r.add(h + 1000, 2000, 'seated', 'AVISO_LEVE', 'headDown', ['headDown']);
+    const s = r.flush(h + 1000)!;
+    expect(s.hours.find((x) => x.hour === 0)?.deviationMs).toEqual({ slouch: 1000 });
+    expect(s.hours.find((x) => x.hour === 1)?.deviationMs).toEqual({ headDown: 2000 });
+  });
+
   it('flush devuelve null si no hay datos y abre un intervalo nuevo', () => {
     const r = mk();
     expect(r.flush(10)).toBeNull();

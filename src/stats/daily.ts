@@ -63,6 +63,7 @@ function addHours(dst: HourBucket[], src: readonly HourBucket[]): void {
     b.badMs += h.badMs;
     b.criticalMs += h.criticalMs;
     b.awayMs += h.awayMs;
+    if (h.deviationMs) addMap((b.deviationMs ??= {}), h.deviationMs);
   }
   dst.sort((a, b) => a.hour - b.hour);
 }

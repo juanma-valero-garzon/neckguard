@@ -51,6 +51,7 @@ function normHours(v: unknown): HourBucket[] {
       badMs: nonNeg(h.badMs),
       criticalMs: nonNeg(h.criticalMs),
       awayMs: nonNeg(h.awayMs),
+      ...(isObj(h.deviationMs) ? { deviationMs: normDevMap(h.deviationMs) } : {}),
     }));
 }
 

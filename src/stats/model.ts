@@ -73,6 +73,8 @@ export interface HourBucket {
   criticalMs: number;
   /** Fuera de la silla (ausente, de pie o equipo bloqueado). */
   awayMs: number;
+  /** Tiempo en mala postura por desviación principal; ausente en datos anteriores. */
+  deviationMs?: Partial<Record<DeviationId, number>>;
 }
 
 /** Agregados por intervalo (≈ 5 min), cortados al cambiar de día local. */

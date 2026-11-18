@@ -63,6 +63,37 @@ function Reliability({ p }: { p: PeriodSummary }): ReactNode {
   );
 }
 
+const MAX_DEVIATIONS = 3;
+
+function TopDeviations({
+  deviations,
+  locale,
+}: {
+  deviations: Partial<Record<DeviationId, number>> | undefined;
+  locale: 'es' | 'en';
+}): ReactNode {
+  const t = useT();
+  const top = (Object.entries(deviations ?? {}) as [DeviationId, number][])
+    .filter(([, ms]) => ms > 0)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, MAX_DEVIATIONS);
+  return (
+    <Card title={t('stats.topDeviations')}>
+      {top.length === 0 ? (
+        <p className="muted">{t('stats.noDeviations')}</p>
+      ) : (
+        <ul className="bullets">
+          {top.map(([id, ms]) => (
+            <li key={id}>
+              {t(deviationLabelKey(id))} — {formatDuration(locale, ms)}
+            </li>
+          ))}
+        </ul>
+      )}
+    </Card>
+  );
+}
+
 function DayDetail({
   day,
   locale,
@@ -113,6 +144,7 @@ function DayDetail({
               </ul>
             </Card>
           </div>
+          <TopDeviations deviations={day.deviationMs} locale={locale} />
           <Card title={t('stats.heatmap')}>
             <HourStrip p={day} locale={locale} />
           </Card>
@@ -223,6 +255,7 @@ function HourDetail({
           <Card title={t('stats.hour.away')}>
             <p className="big">{formatDuration(locale, hourData.awayMs)}</p>
           </Card>
+          <TopDeviations deviations={hourData.deviationMs} locale={locale} />
         </div>
       </div>
     </div>
@@ -336,13 +369,10 @@ export function Stats(): ReactNode {
       preset: settings.preset,
     };
     const advice = buildAdvice({ current, previous, days: period === 'day' ? undefined : days, gate });
-    const top = (Object.entries(current.deviationMs) as [DeviationId, number][])
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 3);
-    return { key, current, previous, days, advice, top, empty: dayList.length === 0 };
+    return { key, current, previous, days, advice, empty: dayList.length === 0 };
   }, [store, offset, period, anchor, settings.onboarding, settings.preset]);
 
-  const { key, current: c, previous, days, advice, top } = view;
+  const { key, current: c, previous, days, advice } = view;
   if (view.empty) {
     return (
       <main aria-labelledby="st-title">
@@ -469,19 +499,7 @@ export function Stats(): ReactNode {
             </Card>
           )}
 
-          <Card title={t('stats.topDeviations')}>
-            {top.length === 0 ? (
-              <p className="muted">{t('stats.noDeviations')}</p>
-            ) : (
-              <ul className="bullets">
-                {top.map(([id, ms]) => (
-                  <li key={id}>
-                    {t(deviationLabelKey(id))} — {formatDuration(locale, ms)}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </Card>
+          <TopDeviations deviations={c.deviationMs} locale={locale} />
 
           <Card title={t('advice.title')}>
             {advice.length === 0 ? (
