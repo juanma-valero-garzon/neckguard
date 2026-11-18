@@ -8,7 +8,16 @@ import { DEVIATION_IDS, LEVELS } from '../core/types';
 import { EXERCISES, exerciseKeys } from '../exercises/library';
 import { en } from './en';
 import { es } from './es';
-import { LOCALES, detectLocale, formatDate, formatDuration, formatMmSs, formatTime, makeT, translate } from './index';
+import {
+  LOCALES,
+  detectLocale,
+  formatDate,
+  formatDuration,
+  formatMmSs,
+  formatTime,
+  makeT,
+  translate,
+} from './index';
 
 const keys = (o: object): string[] => Object.keys(o).sort();
 

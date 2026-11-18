@@ -14,7 +14,9 @@ export const LOCALES: readonly Locale[] = ['es', 'en'];
 export type Params = Record<string, string | number>;
 
 /** Idioma inicial según el del sistema: español si empieza por «es»; inglés en cualquier otro caso. */
-export function detectLocale(languages: readonly string[] | undefined = globalThis.navigator?.languages): Locale {
+export function detectLocale(
+  languages: readonly string[] | undefined = globalThis.navigator?.languages,
+): Locale {
   const first = languages?.[0]?.toLowerCase() ?? '';
   return first === 'es' || first.startsWith('es-') ? 'es' : 'en';
 }

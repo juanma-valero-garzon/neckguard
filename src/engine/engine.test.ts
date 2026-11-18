@@ -217,7 +217,7 @@ describe('engine: descansos y presencia', () => {
     const sittingAt30min = snap.breaks.sittingMs;
     expect(sittingAt30min).toBeGreaterThanOrEqual(29 * 60 * 1000);
     expect(sittingAt30min).toBeLessThanOrEqual(31 * 60 * 1000);
-    
+
     // Después de hacer un micro: sittingMs debe bajar significativamente
     t.engine.finishBreak('micro', 'done');
     snap = t.feed(1 * 60, {}, { fps: 1 });
