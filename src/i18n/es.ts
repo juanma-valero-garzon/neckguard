@@ -75,7 +75,9 @@ export const es = {
   'toast.breakSoon.other': 'Descanso en {count} minutos.',
   'toast.breakSnoozed.one': 'Descanso pospuesto {count} minuto.',
   'toast.breakSnoozed.other': 'Descanso pospuesto {count} minutos.',
-  'toast.eye': 'Regla 20-20-20: mira a lo lejos (6 m) durante 20 segundos.',
+  'eye.title': 'Regla 20-20-20',
+  'eye.body': 'Mira a lo lejos (6 m) durante 20 segundos.',
+  'eye.close': 'Cerrar',
   'toast.breakByAbsence': 'Descanso cumplido: has estado fuera. El contador se ha reiniciado.',
   'toast.break.completed': 'Descanso cumplido. ¡Buen trabajo!',
   'toast.break.declared': 'Descanso registrado como declarado (sin ausencia ni ejercicio guiado).',
@@ -519,7 +521,9 @@ export const es = {
   'settings.microMin': 'Microdescanso cada (min)',
   'settings.longMin': 'Descanso largo cada (min)',
   'settings.eye': 'Regla 20-20-20',
-  'settings.eye.hint': 'Recordatorio discreto cada 20 min para mirar a lo lejos.',
+  'settings.eye.hint':
+    'Aviso discreto con cuenta atrás de 20 s para mirar a lo lejos. Respeta las horas silenciosas.',
+  'settings.eyeInterval': 'Intervalo de la regla 20-20-20 (min)',
   'settings.blink': 'Monitorizar el parpadeo',
   'settings.blink.hint':
     'Sugiere hidratar los ojos si parpadeas poco. Requiere cámara frontal u oblicua y funciona a 15 fps o más; consume más CPU.',

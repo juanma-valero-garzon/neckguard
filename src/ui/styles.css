@@ -749,6 +749,30 @@ fieldset {
   box-shadow: var(--shadow);
 }
 
+.eye-reminder {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 55;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 420px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 10px 12px;
+  box-shadow: var(--shadow);
+  animation: pop 0.2s ease-out;
+}
+.eye-reminder p {
+  margin: 2px 0 0;
+}
+.eye-reminder .countdown {
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+}
 .toasts {
   position: fixed;
   right: 16px;
@@ -864,6 +888,25 @@ body[data-overlay='on']::after {
 }
 .mini-time strong {
   font-size: 26px;
+  font-variant-numeric: tabular-nums;
+}
+.mini-eye {
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 8px;
+  margin-bottom: 8px;
+  font-size: 12px;
+}
+.mini-eye p {
+  margin: 2px 0 6px;
+}
+.mini-eye-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.mini-eye .countdown {
+  font-size: 22px;
   font-variant-numeric: tabular-nums;
 }
 .mini.mini-break {

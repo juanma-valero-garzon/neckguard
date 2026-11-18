@@ -14,6 +14,7 @@ export function MiniView(): ReactNode {
   const t = makeT(snap?.locale ?? 'es');
   const compact = snap?.mini?.hypervigilance === false;
   const brk = snap?.mini?.breakInfo;
+  const eye = snap?.mini?.eyeInfo;
   const send = (c: TrayCommand): void => window.neckguard?.sendTrayCommand(c);
 
   if (brk) {
@@ -91,6 +92,18 @@ export function MiniView(): ReactNode {
             </li>
           ))}
         </ul>
+      )}
+      {eye && (
+        <div className="mini-eye" role="alert">
+          <strong>{eye.title}</strong>
+          <p>{eye.body}</p>
+          <div className="mini-eye-foot">
+            <span className="countdown" role="timer" aria-live="off">
+              {eye.countdown}
+            </span>
+            <button onClick={() => send('eyeDismiss')}>{eye.closeLabel}</button>
+          </div>
+        </div>
       )}
       {snap?.mini && (
         <div className="mini-time" role="timer">

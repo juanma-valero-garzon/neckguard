@@ -13,7 +13,8 @@ type TrayCommand =
   | 'breakStart'
   | 'breakDone'
   | 'breakSnooze'
-  | 'breakSkip';
+  | 'breakSkip'
+  | 'eyeDismiss';
 type SystemEvent = 'suspend' | 'resume' | 'lock' | 'unlock';
 
 const on = <T,>(channel: string, cb: (v: T) => void): (() => void) => {

@@ -26,7 +26,7 @@ import {
   systemClock,
 } from './clock';
 import { suggestExercise, type Exercise } from '../exercises/library';
-import { BREAK_DURATION_MS, useApp, type Screen } from './store';
+import { BREAK_DURATION_MS, EYE_DURATION_MS, useApp, type Screen } from './store';
 
 const set = useApp.setState;
 const get = useApp.getState;
@@ -66,6 +66,7 @@ export class AppRuntime {
   private lastCameraKey = '';
   private persistTimer: ReturnType<typeof setTimeout> | null = null;
   private trayTimer: ReturnType<typeof setInterval> | null = null;
+  private eyeTimer: ReturnType<typeof setTimeout> | null = null;
   private started = false;
   private detecting = false;
   private unsubscribers: (() => void)[] = [];
@@ -131,7 +132,7 @@ export class AppRuntime {
     // La miniatura gestiona el descanso por sí sola: se le envía el estado en cuanto cambia.
     this.unsubscribers.push(
       useApp.subscribe((s, prev) => {
-        if (s.breakUi !== prev.breakUi) this.pushTray();
+        if (s.breakUi !== prev.breakUi || s.eyeUi !== prev.eyeUi) this.pushTray();
       }),
     );
 
@@ -168,6 +169,7 @@ export class AppRuntime {
     this.unsubscribers.forEach((u) => u());
     this.worker?.terminate();
     if (this.trayTimer) clearInterval(this.trayTimer);
+    if (this.eyeTimer) clearTimeout(this.eyeTimer);
     this.camera.dispose();
     this.vision.close();
     this.host.remove();
@@ -553,6 +555,7 @@ export class AppRuntime {
         this.toast('info', 'toast.breakSoon', { count: Math.max(1, Math.round(e.inMs / 60_000)) });
       } else if (e.type === 'due') {
         if (!this.quiet()) {
+          this.dismissEye();
           set({ breakUi: { kind: e.kind, startedAt: systemClock.nowMs(), timerStartedAt: null } });
           if (a.soundEnabled) this.audio.play('BREAK', a.toneSet, a.volume);
           if (a.notificationsEnabled) {
@@ -564,12 +567,25 @@ export class AppRuntime {
           }
         }
       } else if (e.type === 'eye') {
-        this.toast('info', 'toast.eye');
+        this.showEye();
       } else if (e.type === 'absenceReset') {
         this.toast('positive', 'toast.breakByAbsence');
         set({ breakUi: null });
       }
     }
+  }
+
+  /** Regla 20-20-20: no se muestra en horas silenciosas ni mientras hay un descanso abierto. */
+  private showEye(): void {
+    if (this.quiet() || get().breakUi || get().eyeUi) return;
+    set({ eyeUi: { startedAt: systemClock.nowMs() } });
+    this.eyeTimer = setTimeout(() => this.dismissEye(), EYE_DURATION_MS);
+  }
+
+  dismissEye(): void {
+    if (this.eyeTimer) clearTimeout(this.eyeTimer);
+    this.eyeTimer = null;
+    if (get().eyeUi) set({ eyeUi: null });
   }
 
   finishBreak(kind: BreakKind, how: 'done' | 'skip', exerciseId?: string): void {
@@ -637,6 +653,7 @@ export class AppRuntime {
     if (c === 'togglePause') this.pause(!get().paused);
     else if (c === 'snooze15') this.snoozeAlerts(15);
     else if (c === 'recalibrate') set({ screen: 'calibration' });
+    else if (c === 'eyeDismiss') this.dismissEye();
     else {
       const ui = get().breakUi;
       if (!ui) return;
@@ -682,6 +699,16 @@ export class AppRuntime {
           snoozeMin: Math.round(get().settings.breaks.snoozeMin),
         }
       : undefined;
+    const eye = get().eyeUi;
+    const eyeInfo =
+      eye && !breakInfo
+        ? {
+            title: t('eye.title'),
+            body: t('eye.body'),
+            countdown: formatMmSs(Math.max(EYE_DURATION_MS - (systemClock.nowMs() - eye.startedAt), 0)),
+            closeLabel: t('eye.close'),
+          }
+        : undefined;
     const sittingMin = Math.round(snap.breaks.sittingMs / 60_000);
     const nextBreakMin = Math.round(snap.breaks.remainingMs / 60_000);
     this.platform.updateTray({
@@ -715,6 +742,7 @@ export class AppRuntime {
         remaining: snap.breaks.pending ? '' : formatMmSs(snap.breaks.remainingMs),
         remainingLabel: snap.breaks.pending ? t('dashboard.breakPending') : t('mini.nextBreak'),
         ...(breakInfo ? { breakInfo } : {}),
+        ...(eyeInfo ? { eyeInfo } : {}),
       },
     });
   }

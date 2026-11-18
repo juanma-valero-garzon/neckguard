@@ -74,6 +74,15 @@ describe('temporizadores de descanso', () => {
     );
   });
 
+  it('20-20-20 respeta el intervalo configurado', () => {
+    const r = run(initialBreakState(), 0, 31 * MIN, 'present', {
+      ...cfg,
+      eyeEnabled: true,
+      eyeIntervalMs: 15 * MIN,
+    });
+    expect(r.events.filter((x) => x.e.type === 'eye').map((x) => x.at / MIN)).toEqual([15, 30]);
+  });
+
   it('ausencia ≥ 3 min reinicia el contador y emite absenceReset una sola vez', () => {
     let r = run(initialBreakState(), 0, 20 * MIN, 'present');
     r = run(r.state, r.t, 5 * MIN, 'absent');

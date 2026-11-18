@@ -131,6 +131,17 @@ describe('validación IPC de Electron', () => {
         mini: { ...mini, breakInfo: { ...breakInfo, steps: Array(9).fill('a') } },
       }),
     ).toBe(false);
+    const eyeInfo = {
+      title: 'Regla 20-20-20',
+      body: 'Mira a lo lejos',
+      countdown: '0:20',
+      closeLabel: 'Cerrar',
+    };
+    expect(validTraySnapshot({ ...snap, mini: { ...mini, eyeInfo } })).toBe(true);
+    expect(validTraySnapshot({ ...snap, mini: { ...mini, eyeInfo: { ...eyeInfo, countdown: 5 } } })).toBe(
+      false,
+    );
+    expect(validTrayCommand('eyeDismiss')).toBe(true);
   });
 
   it('overlay acotado y emisor de confianza', () => {

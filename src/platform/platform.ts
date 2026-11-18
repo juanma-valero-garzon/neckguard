@@ -51,6 +51,8 @@ export interface TraySnapshot {
       started: boolean;
       snoozeMin: number;
     };
+    /** Regla 20-20-20: aviso con cuenta atrás en la miniatura (no aparece durante un descanso). */
+    eyeInfo?: { title: string; body: string; countdown: string; closeLabel: string };
   };
 }
 
@@ -62,7 +64,8 @@ export type TrayCommand =
   | 'breakStart'
   | 'breakDone'
   | 'breakSnooze'
-  | 'breakSkip';
+  | 'breakSkip'
+  | 'eyeDismiss';
 export type SystemEvent = 'suspend' | 'resume' | 'lock' | 'unlock';
 export type CameraAccess = 'granted' | 'denied' | 'unknown';
 export type NotificationAccess = 'granted' | 'denied' | 'default' | 'unsupported';

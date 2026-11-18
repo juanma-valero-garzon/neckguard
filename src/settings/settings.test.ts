@@ -158,12 +158,13 @@ describe('presets', () => {
       ...DEFAULT_SETTINGS,
       preset: 'custom' as const,
       sensitivity: 1.3,
-      breaks: { ...DEFAULT_SETTINGS.breaks, microMin: 40, longMin: 20, eyeEnabled: true },
+      breaks: { ...DEFAULT_SETTINGS.breaks, microMin: 40, longMin: 20, eyeEnabled: true, eyeIntervalMin: 25 },
     };
     const r = resolvePreset(s);
     expect(r.breaks.microIntervalMs).toBe(40 * 60_000);
     expect(r.breaks.longIntervalMs).toBe(41 * 60_000);
     expect(r.breaks.eyeEnabled).toBe(true);
+    expect(r.breaks.eyeIntervalMs).toBe(25 * 60_000);
     expect(r.sensitivityScale).toBe(1.3);
   });
 

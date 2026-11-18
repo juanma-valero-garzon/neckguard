@@ -50,6 +50,7 @@ export interface Settings {
     longMin: number;
     preWarnMin: number;
     eyeEnabled: boolean;
+    eyeIntervalMin: number;
     resetAfterAbsentMin: number;
     snoozeMin: number;
   };
@@ -103,6 +104,7 @@ export const DEFAULT_SETTINGS: Settings = {
     longMin: 55,
     preWarnMin: 2,
     eyeEnabled: false,
+    eyeIntervalMin: 20,
     resetAfterAbsentMin: 3,
     snoozeMin: 5,
   },
@@ -150,6 +152,7 @@ const FIELDS: Record<string, FieldSpec> = {
   'breaks.longMin': { kind: 'num', min: 10, max: 240, int: true },
   'breaks.preWarnMin': { kind: 'num', min: 0, max: 10, int: true },
   'breaks.eyeEnabled': { kind: 'bool' },
+  'breaks.eyeIntervalMin': { kind: 'num', min: 5, max: 60, int: true },
   'breaks.resetAfterAbsentMin': { kind: 'num', min: 1, max: 30, int: true },
   'breaks.snoozeMin': { kind: 'num', min: 1, max: 30, int: true },
   'blink.enabled': { kind: 'bool' },

@@ -213,6 +213,8 @@ const MINI_SIZE = { width: 232, height: 262 };
 const MINI_BREAK_SIZE = { width: 300, height: 480 };
 // Con hipervigilancia OFF solo se muestra el contador de tiempo sentado.
 const MINI_HEIGHT_COMPACT = 120;
+// Altura añadida mientras se muestra el aviso 20-20-20.
+const MINI_EYE_EXTRA = 84;
 
 function createMini(): BrowserWindow {
   const area = screen.getPrimaryDisplay().workArea;
@@ -314,9 +316,8 @@ function applyTrayUpdate(s: TraySnapshot): void {
   if (mini && !mini.isDestroyed() && mini.isVisible()) {
     const h = s.mini?.breakInfo
       ? MINI_BREAK_SIZE.height
-      : s.mini?.hypervigilance === false
-        ? MINI_HEIGHT_COMPACT
-        : MINI_SIZE.height;
+      : (s.mini?.hypervigilance === false ? MINI_HEIGHT_COMPACT : MINI_SIZE.height) +
+        (s.mini?.eyeInfo ? MINI_EYE_EXTRA : 0);
     const w = s.mini?.breakInfo ? MINI_BREAK_SIZE.width : MINI_SIZE.width;
     const b = mini.getBounds();
     if (b.width !== w || b.height !== h) {

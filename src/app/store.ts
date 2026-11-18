@@ -41,6 +41,13 @@ export interface BreakUi {
 
 export const BREAK_DURATION_MS = { micro: 90_000, long: 300_000 } as const;
 
+/** Aviso de la regla 20-20-20: cuenta atrás compartida con la miniatura. */
+export interface EyeUi {
+  startedAt: number;
+}
+
+export const EYE_DURATION_MS = 20_000;
+
 export interface AppState {
   ready: boolean;
   loadStatus: LoadStatus;
@@ -58,6 +65,7 @@ export interface AppState {
   toasts: Toast[];
   calibration: CalibrationUi;
   breakUi: BreakUi | null;
+  eyeUi: EyeUi | null;
   paused: boolean;
   alertBorder: boolean;
   notificationAccess: string;
@@ -80,6 +88,7 @@ export const useApp = create<AppState>(() => ({
   toasts: [],
   calibration: { state: 'idle', startedAt: 0, durationMs: 5000, failure: null, detail: null },
   breakUi: null,
+  eyeUi: null,
   paused: false,
   alertBorder: false,
   notificationAccess: 'default',

@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-only
 // Copyright (C) 2026 NeckGuard contributors
 
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { runtime } from '../app/runtime';
-import { useApp, type Screen } from '../app/store';
+import { EYE_DURATION_MS, useApp, type Screen } from '../app/store';
+import { formatMmSs } from '../i18n';
 import { About } from './About';
 import { BreakModal } from './BreakModal';
 import { Calibration } from './Calibration';
@@ -35,6 +36,36 @@ function Toasts(): ReactNode {
           </button>
         </div>
       ))}
+    </div>
+  );
+}
+
+function EyeReminder(): ReactNode {
+  const t = useT();
+  const eye = useApp((s) => s.eyeUi);
+  const [now, setNow] = useState(0);
+  const startedAt = eye?.startedAt ?? null;
+
+  useEffect(() => {
+    if (startedAt === null) return;
+    const tick = (): void => setNow(performance.now());
+    tick();
+    const id = window.setInterval(tick, 250);
+    return () => window.clearInterval(id);
+  }, [startedAt]);
+
+  if (!eye) return null;
+  const remaining = Math.max(EYE_DURATION_MS - (now - eye.startedAt), 0);
+  return (
+    <div className="eye-reminder" role="status" aria-live="polite">
+      <div>
+        <strong>{t('eye.title')}</strong>
+        <p>{t('eye.body')}</p>
+      </div>
+      <span className="countdown" aria-live="off">
+        {formatMmSs(remaining)}
+      </span>
+      <button onClick={() => runtime.dismissEye()}>{t('eye.close')}</button>
     </div>
   );
 }
@@ -106,6 +137,7 @@ export function App(): ReactNode {
         {screen === 'about' && <About />}
       </div>
       <BreakModal />
+      <EyeReminder />
       <Toasts />
     </div>
   );

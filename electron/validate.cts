@@ -17,6 +17,7 @@ export const TRAY_COMMANDS = [
   'breakDone',
   'breakSnooze',
   'breakSkip',
+  'eyeDismiss',
 ] as const;
 export type TrayCommand = (typeof TRAY_COMMANDS)[number];
 
@@ -49,6 +50,7 @@ export interface MiniData {
     started: boolean;
     snoozeMin: number;
   };
+  eyeInfo?: { title: string; body: string; countdown: string; closeLabel: string };
 }
 
 export interface TraySnapshot {
@@ -111,8 +113,13 @@ function validMini(m: unknown): m is MiniData {
     ) &&
     str(m.remaining, 20) &&
     str(m.remainingLabel, 100) &&
-    (m.breakInfo === undefined || validBreakInfo(m.breakInfo))
+    (m.breakInfo === undefined || validBreakInfo(m.breakInfo)) &&
+    (m.eyeInfo === undefined || validEyeInfo(m.eyeInfo))
   );
+}
+
+function validEyeInfo(e: unknown): boolean {
+  return isObj(e) && str(e.title, 100) && str(e.body, 300) && str(e.countdown, 20) && str(e.closeLabel, 40);
 }
 
 function validBreakInfo(b: unknown): boolean {

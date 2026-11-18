@@ -31,6 +31,7 @@ export function resolvePreset(s: Settings): ResolvedPreset {
     longIntervalMs: Math.max(p?.long ?? s.breaks.longMin, (p?.micro ?? s.breaks.microMin) + 1) * MIN,
     preWarnMs: (p?.pre ?? s.breaks.preWarnMin) * MIN,
     eyeEnabled: s.breaks.eyeEnabled,
+    eyeIntervalMs: s.breaks.eyeIntervalMin * MIN,
     resetAfterAbsentMs: s.breaks.resetAfterAbsentMin * MIN,
     snoozeMs: s.breaks.snoozeMin * MIN,
   };

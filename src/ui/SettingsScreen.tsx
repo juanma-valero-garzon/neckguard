@@ -364,6 +364,19 @@ export function SettingsScreen(): ReactNode {
             onChange={(v) => upd((x) => ({ ...x, breaks: { ...x.breaks, eyeEnabled: v } }))}
           />
         </Row>
+        <Row label={t('settings.eyeInterval')} htmlFor="s-eye-int">
+          <input
+            id="s-eye-int"
+            type="number"
+            min={5}
+            max={60}
+            disabled={!s.breaks.eyeEnabled}
+            value={s.breaks.eyeIntervalMin}
+            onChange={(e) =>
+              upd((x) => ({ ...x, breaks: { ...x.breaks, eyeIntervalMin: Number(e.target.value) } }))
+            }
+          />
+        </Row>
         <Row label={t('settings.blink')} hint={t('settings.blink.hint')} htmlFor="s-blink">
           <Toggle
             id="s-blink"

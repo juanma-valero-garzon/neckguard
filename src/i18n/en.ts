@@ -75,7 +75,9 @@ export const en: Record<MessageKey, string> = {
   'toast.breakSoon.other': 'Break in {count} minutes.',
   'toast.breakSnoozed.one': 'Break snoozed for {count} minute.',
   'toast.breakSnoozed.other': 'Break snoozed for {count} minutes.',
-  'toast.eye': '20-20-20 rule: look at something far away (6 m) for 20 seconds.',
+  'eye.title': '20-20-20 rule',
+  'eye.body': 'Look at something far away (6 m) for 20 seconds.',
+  'eye.close': 'Close',
   'toast.hydration':
     'You are blinking little: blink on purpose a few times, look away from the screen and, if your eyes feel dry, use lubricating drops.',
   'toast.breakByAbsence': 'Break completed: you were away. The counter has been reset.',
@@ -511,7 +513,9 @@ export const en: Record<MessageKey, string> = {
   'settings.microMin': 'Micro-break every (min)',
   'settings.longMin': 'Long break every (min)',
   'settings.eye': '20-20-20 rule',
-  'settings.eye.hint': 'Discreet reminder every 20 min to look into the distance.',
+  'settings.eye.hint':
+    'Discreet reminder with a 20 s countdown to look into the distance. Respects quiet hours.',
+  'settings.eyeInterval': '20-20-20 rule interval (min)',
   'settings.blink': 'Blink monitoring',
   'settings.blink.hint':
     'Suggests eye hydration when you blink little. Needs a frontal or oblique camera and runs at 15 fps or more; uses more CPU.',
