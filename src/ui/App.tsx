@@ -124,7 +124,12 @@ export function App(): ReactNode {
               </button>
             ))}
           </nav>
-          {paused && <span className="paused-tag">{t('dashboard.pausedTag')}</span>}
+          <div className="topbar-end">
+            {paused && <span className="paused-tag">{t('dashboard.pausedTag')}</span>}
+            {runtime.canMiniMode() && (
+              <button onClick={() => runtime.setMiniMode(true)}>{t('mini.enter')}</button>
+            )}
+          </div>
         </header>
       )}
       <div id="content" className="content" tabIndex={-1}>

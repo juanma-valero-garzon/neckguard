@@ -213,8 +213,13 @@ html.electron .topbar {
   background: var(--surface-2);
   font-weight: 600;
 }
-.paused-tag {
+.topbar-end {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.paused-tag {
   color: var(--warn);
   font-weight: 600;
 }
